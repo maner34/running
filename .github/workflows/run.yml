@@ -1,0 +1,30 @@
+name: Garmin Running Sync
+
+on:
+  schedule:
+    # 30분마다 주기적 자동 실행
+    - cron: '*/30 * * * *'
+  workflow_dispatch: # 수동 즉시 실행 지원
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          
+      - name: Install dependencies
+        run: |
+          pip install garminconnect google-generativeai google-auth google-auth-oauthlib google-api-python-client
+          
+      - name: Run script
+        env:
+          GARMIN_EMAIL: ${{ secrets.GARMIN_EMAIL }}
+          GARMIN_PASSWORD: ${{ secrets.GARMIN_PASSWORD }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+        run: python main.py
