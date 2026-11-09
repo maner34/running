@@ -14,14 +14,12 @@ GOOGLE_CREDENTIALS = os.environ.get("GOOGLE_CREDENTIALS")
 
 SCOPES = ['https://www.googleapis.com/auth/calendar.events']
 
+from google.oauth2.service_account import Credentials
+
 def get_calendar_service():
     info = json.loads(GOOGLE_CREDENTIALS)
-    creds = Credentials.from_authorized_user_info(info, SCOPES)
-    if not creds.valid:
-        if creds.expired and creds.refresh_token:
-            creds.refresh(Request())
+    creds = Credentials.from_service_account_info(info, scopes=SCOPES)
     return build('calendar', 'v3', credentials=creds)
-
 def fetch_today_running():
     try:
         client = Garmin(GARMIN_EMAIL, GARMIN_PASSWORD)
