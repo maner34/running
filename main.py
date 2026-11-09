@@ -30,8 +30,8 @@ def fetch_today_running():
         print(f"가민 로그인 실패: {e}")
         return None, None
 
-    today_str = date.today().isoformat()
-    activities = client.get_activities_by_date(today_str, today_str)
+    # 최근 활동 5건 조회
+    activities = client.get_activities(0, 5)
     
     running_list = [
         act for act in activities 
@@ -39,9 +39,10 @@ def fetch_today_running():
     ]
     
     if not running_list:
-        print("오늘 신규 러닝 데이터가 없습니다.")
+        print("최근 러닝 데이터가 없습니다.")
         return None, None
     
+    # 가장 최근 러닝 1건 선택
     target_act = running_list[0]
     activity_id = target_act["activityId"]
     splits = client.get_activity_splits(activity_id)
