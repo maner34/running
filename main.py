@@ -50,7 +50,7 @@ def fetch_today_running():
 
 def analyze_with_gemini(activity, splits):
     genai.configure(api_key=GEMINI_API_KEY)
-    model = genai.GenerativeModel("gemini-1.5-flash")
+    model = genai.GenerativeModel("gemini-1.5-flash-latest")
 
     distance_km = round(activity.get("distance", 0) / 1000, 2)
     duration_sec = activity.get("duration", 0)
