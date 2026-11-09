@@ -109,7 +109,7 @@ def register_to_calendar(service, activity, summary_data, report_text):
     # 중복 체크
     time_min = start_dt.replace(hour=0, minute=0, second=0).isoformat() + 'Z'
     time_max = start_dt.replace(hour=23, minute=59, second=59).isoformat() + 'Z'
-    events = service.events().list(calendarId='primary', timeMin=time_min, timeMax=time_max).execute()
+    events = service.events().list(calendarId='pilbong34@gmail.com', timeMin=time_min, timeMax=time_max).execute()
     
     for ev in events.get('items', []):
         if f"Garmin_ID: {activity_id}" in ev.get('description', ''):
@@ -136,7 +136,7 @@ def register_to_calendar(service, activity, summary_data, report_text):
         'end': {'dateTime': end_dt.isoformat(), 'timeZone': 'Asia/Seoul'},
         'colorId': '10'
     }
-    service.events().insert(calendarId='primary', body=event).execute()
+    service.events().insert(calendarId='pilbong34@gmail.com', body=event).execute()
     print("캘린더 등록 완료")
 
 if __name__ == "__main__":
