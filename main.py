@@ -35,10 +35,11 @@ def upload_csv_to_drive(service, folder_id, file_name, csv_data):
         'parents': [folder_id]
     }
     media = MediaIoBaseUpload(io.BytesIO(csv_data), mimetype='text/csv', resumable=False)
-    uploaded_file = service.files().create(
+   uploaded_file = service.files().create(
         body=file_metadata,
         media_body=media,
-        fields='id, name'
+        fields='id, name',
+        supportsAllDrives=True
     ).execute()
     print(f"✅ 구글 드라이브 업로드 완료: {uploaded_file.get('name')}")
 
