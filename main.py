@@ -53,13 +53,8 @@ def analyze_with_gemini(activity, splits):
     model = genai.configure(api_key=GEMINI_API_KEY)
     
     # 내 계정에서 사용 가능한 최신 모델 자동 선택
-    available_models = [
-        m.name for m in genai.list_models() 
-        if 'generateContent' in m.supported_generation_methods
-    ]
-    # flash 모델을 우선 선택하고, 없으면 첫 번째 지원 모델 선택
-    selected_model = next((m for m in available_models if 'flash' in m), available_models[0])
-    model = genai.GenerativeModel(selected_model)
+    available_models = genai.configure(api_key=GEMINI_API_KEY)
+    model = genai.GenerativeModel("gemini-3.8-flash")
 
     distance_km = round(activity.get("distance", 0) / 1000, 2)
     duration_sec = activity.get("duration", 0)
