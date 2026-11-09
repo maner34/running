@@ -29,13 +29,12 @@ def file_exists_in_folder(service, folder_id, file_name):
     return len(files) > 0
 
 def upload_csv_to_drive(service, folder_id, file_name, csv_data):
-    """CSV 바이너리 데이터를 구글 드라이브 특정 폴더로 업로드"""
     file_metadata = {
         'name': file_name,
         'parents': [folder_id]
     }
     media = MediaIoBaseUpload(io.BytesIO(csv_data), mimetype='text/csv', resumable=False)
-   uploaded_file = service.files().create(
+    uploaded_file = service.files().create(
         body=file_metadata,
         media_body=media,
         fields='id, name',
